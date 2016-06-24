@@ -14,7 +14,7 @@ defmodule Logger.Backends.JSON.Mixfile do
   def application, do: []
 
   defp deps do
-    [{:json, "~> 0.3.2"}]
+    [{:poison, "~> 2.0"}]
   end
 
   def package do
