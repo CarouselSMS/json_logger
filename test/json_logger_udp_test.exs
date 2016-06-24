@@ -21,7 +21,7 @@ defmodule Logger.Backends.JSON.UDPTest do
   test "sends debug message via UDP", %{server: server}do
     Logger.debug @message
     assert {:ok, {_ip, _port, message}} = :gen_udp.recv(server, 0, 500)
-    assert {:ok, result} = JSON.decode(message)
+    assert {:ok, result} = Poison.decode(message)
     assert result["level"] == to_string(@level)
     assert result["message"] == @message
     assert result["metadata"] == @metadata
@@ -32,7 +32,7 @@ defmodule Logger.Backends.JSON.UDPTest do
     config [metadata: new_metadata]
     Logger.debug @message
     assert {:ok, {_ip, _port, message}} = :gen_udp.recv(server, 0, 500)
-    assert {:ok, result} = JSON.decode(message)
+    assert {:ok, result} = Poison.decode(message)
     assert result["level"] == to_string(@level)
     assert result["message"] == @message
     assert result["metadata"] == new_metadata
@@ -45,7 +45,7 @@ defmodule Logger.Backends.JSON.UDPTest do
     assert {:error, :timeout} = :gen_udp.recv(server, 0, 500)
     Logger.info @message
     assert {:ok, {_ip, _port, message}} = :gen_udp.recv(server, 0, 500)
-    assert {:ok, result} = JSON.decode(message)
+    assert {:ok, result} = Poison.decode(message)
     assert result["level"] == "info"
     assert result["message"] == @message
     assert result["metadata"] == @metadata

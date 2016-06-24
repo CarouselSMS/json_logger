@@ -23,7 +23,7 @@ defmodule Logger.Backends.JSON.TCPTest do
     assert {:ok, client} = :gen_tcp.accept(server, 500)
     assert {:ok, message} = :gen_tcp.recv(client, 0, 500)
     assert :ok = :gen_tcp.close(client)
-    assert {:ok, result} = JSON.decode(message)
+    assert {:ok, result} = Poison.decode(message)
     assert result["level"] == to_string(@level)
     assert result["message"] == @message
     assert result["metadata"] == @metadata

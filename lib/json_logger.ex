@@ -89,6 +89,6 @@ defmodule Logger.Backends.JSON do
 
   defp event_json(level, msg, _ts, md, metadata) do
     pid_str = :io_lib.fwrite('~p', [md[:pid]]) |> to_string
-    JSON.encode! %{level: level, message: msg, pid: pid_str, module: md[:module], function: md[:function], line: md[:line], metadata: metadata}
+    Poison.encode! %{level: level, message: msg, pid: pid_str, module: md[:module], function: md[:function], line: md[:line], metadata: metadata}
   end
 end
